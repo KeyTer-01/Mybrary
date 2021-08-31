@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
         searchOptions.name = new RegExp(req.query.name, 'i')
     }
     try{
-        const authors = await Author.find({searchOptions})
+        const authors = await Author.find(searchOptions)
         res.render('authors/index', { 
             authors: authors,
             searchOptions: req.query
@@ -33,7 +33,7 @@ router.post('/', async (req, res) =>{
     try {
         const newAuthor = await author.save()
         // res.redirect(`authors/${newAuthor.id}`)
-         res.redirect(`authors`)
+        res.redirect(`authors`)
         }
     catch {
         res.render('authors/new', {
