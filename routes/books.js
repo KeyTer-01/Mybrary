@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const multer = require('multer')
 const path = require('path')
+const fs = require('fs')
 const Book = require('../models/book')
 const uploadPath = path.join('public', Book.coverImageBasePath)
 const Author = require('../models/author')
@@ -40,6 +41,9 @@ router.post('/', upload.single('cover'), async (req, res) =>{
         res.redirect(`books`)
         // res.redirect(`books/${newBook.id}`)
     } catch {
+        if (book.coverImageName != null){
+            removeBookCover(book.coverImageName)
+        }
         renderNewPage(res, book, true)
     }
 
